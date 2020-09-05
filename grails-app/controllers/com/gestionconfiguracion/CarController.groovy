@@ -50,6 +50,33 @@ class CarController
         redirect(action: "index", params: [editorMode: true])
     }
 
+    def edit(Long id)
+    {
+        respond carService.get(id), model:[isEditor: isEditor]
+    }
+
+    def update(Car car)
+    {
+        if (car == null) {
+            notFound()
+            return
+        }
+
+        try
+        {
+            carService.save(car)
+        }
+        catch (ValidationException ignored)
+        {
+            respond car.errors, view:'edit', model:[isEditor: isEditor]
+            return
+        }
+
+        flash.message = "Automotor actualizado exitosamente."
+
+        redirect(action: "index", params: [editorMode: true])
+    }
+
     def delete(Long id)
     {
         if (id == null)
@@ -62,7 +89,7 @@ class CarController
         {
             carService.delete(id)
 
-            flash.message = "Automotor eliminado exitosamente."
+            flash.message = "Automotor eliminar exitosamente."
         }
         catch (Exception ignored) {
             flash.message = "Error: No fue posible eliminar el automotor."

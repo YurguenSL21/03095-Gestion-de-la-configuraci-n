@@ -48,6 +48,12 @@
             <g:if test="${isEditor}">
                 <g:form resource="${this.car}" method="DELETE">
                     <fieldset class="buttons">
+
+                            <g:link class="edit"
+                                    action="edit"
+                                    resource="${this.car}">
+                                <g:message code="default.button.edit.label" default="Editar" />
+                            </g:link>
                         <input class="delete"
                                type="submit"
                                value="${message(code: 'default.button.delete.label', default: 'Eliminar')}"
